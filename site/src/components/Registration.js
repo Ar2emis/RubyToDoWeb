@@ -5,6 +5,7 @@ import {
 import {sign_up as ask_sign_up} from './Requestor'
 import cookie from 'react-cookies'
 import './styles/styles.scss'
+import swal from '@sweetalert/with-react';
 
 
 export default class Registration extends React.Component{
@@ -40,7 +41,12 @@ export default class Registration extends React.Component{
         const password_confirmation = document.getElementById('password_confirmation').value
 
         if(login.length === 0 || password.length === 0 || password_confirmation.length === 0){
-            alert('Error: Fill in all the fields!')
+            swal(
+                <div>
+                    <h1>Error!</h1>        
+                    <p>Fill in all the fields!</p>
+                </div>
+            )
             return
         }
 
@@ -48,21 +54,36 @@ export default class Registration extends React.Component{
         login.indexOf('/') !== -1 || login.indexOf('\\') !== -1 || login.indexOf('%') !== -1 ||
         login.indexOf('^') !== -1 || login.indexOf('&') !== -1 || login.indexOf('(') !== -1 ||
         login.indexOf('~') !== -1 || login.indexOf(')') !== -1){
-            alert('Error: You are using illegal symbols!')
+            swal(
+                <div>
+                    <h1>Error!</h1>        
+                    <p>You are using illegal symbols!</p>
+                </div>
+            )
             return
         }
 
         if(password !== password_confirmation){
-            alert('Error: Passwords must match!')
+            swal(
+                <div>
+                    <h1>Error!</h1>        
+                    <p>Passwords must match!</p>
+                </div>
+            )
             return
         }
 
         ask_sign_up(login, password)
         .then(data => {
+            console.log(data)
             this.setState({is_registered: true})
-            alert("You successfully signed up!")
         }).catch(error => {
-            alert(error)
+            swal(
+                <div>
+                    <h1>Error!</h1>        
+                    <p>Username is already exists.</p>
+                </div>
+            )
         });
     }
 

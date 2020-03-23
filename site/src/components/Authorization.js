@@ -6,6 +6,7 @@ import {
     Redirect
   } from "react-router-dom"
 import {sign_in as ask_sign_in} from './Requestor'
+import swal from '@sweetalert/with-react';
 
 
 export default class Authorization extends React.Component{
@@ -34,7 +35,12 @@ export default class Authorization extends React.Component{
         const password = document.getElementById('password').value
 
         if(login.length === 0 || password.length === 0){
-            alert('Fill in all the fields!')
+            swal(
+                <div>
+                    <h1>Error!</h1>        
+                    <p>Fill in all the fields!</p>
+                </div>
+            )
             return
         }
 
@@ -46,7 +52,12 @@ export default class Authorization extends React.Component{
                                  { path: '/' })
             this.setState({is_authenticated: true})
         }).catch(error => {
-            alert(error)
+            swal(
+                <div>
+                    <h1>Wrong username or password!</h1>        
+                    <p>Please, repeat.</p>
+                </div>
+            )
         });
     }
 

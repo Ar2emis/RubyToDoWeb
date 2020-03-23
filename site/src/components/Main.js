@@ -31,7 +31,7 @@ export default class Main extends React.Component{
     }
 
     render(){
-        if(cookie.load('user') === undefined || cookie.load('user').token === undefined){
+        if(!cookie.load('user')){
            return this.redirect_to_authorization()
         }
         
@@ -53,7 +53,7 @@ export default class Main extends React.Component{
     }
 
     componentDidMount(){
-        if(!this.state.is_loaded){
+        if(!this.state.is_loaded && cookie.load('user') !== undefined){
             this.load_projects()
         }
     }
